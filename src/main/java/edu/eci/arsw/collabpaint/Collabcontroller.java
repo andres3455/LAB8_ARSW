@@ -13,7 +13,7 @@ public class Collabcontroller {
     @MessageMapping("/newpoint.{id}")
     @SendTo("/topic/newpoint.{id}")  
     public Point sendPoint(@DestinationVariable String id, Point point) {
-        System.out.println("📡 Enviando punto al tópico /topic/newpoint." + id + ": " + point);
+        System.out.println(" Enviando punto al tópico /topic/newpoint." + id + ": " + point);
         return point;
     }
 }

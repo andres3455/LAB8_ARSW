@@ -68,6 +68,7 @@ var app = (function () {
     };
     
 
+
     return {
         //parte 3
         connect: function () {
@@ -81,7 +82,7 @@ var app = (function () {
             var canvas = document.getElementById("canvas");
             canvas.addEventListener("click", function (evt) {
                 var pt = getMousePosition(evt);
-                console.info(`📡 Publicando punto desde canvas en: ${topico}`, pt);
+                console.info(` Publicando punto desde canvas en: ${topico}`, pt);
                 app.publishPoint(pt.x, pt.y);
             });
         },
@@ -93,7 +94,7 @@ var app = (function () {
             }
 
             var pt = new Point(parseInt(px), parseInt(py));
-            console.info("📡 Publicando punto en:", topico);
+            console.info(" Publicando punto en:", topico);
             addPointToCanvas(pt);
             stompClient.send(`/app/newpoint.${topico.split(".")[1]}`, {}, JSON.stringify(pt)); // Envío dinámico
         },
