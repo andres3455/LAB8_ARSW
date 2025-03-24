@@ -2,7 +2,7 @@
 ### Arquitecturas de Software - ARSW
 ### Laboratorio - Broker de Mensajes STOMP con WebSockets + HTML5 Canvas.
 
-### Laboratorio desearrollado por:
+### Laboratorio desarrollado por:
 * Andrés Felipe Rodríguez Chaparro
 * Santiago Guerra
 
