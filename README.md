@@ -63,6 +63,37 @@ Para esto, realice lo siguiente:
 
 En el archivo html, se agregaron los campos para capturar los puntos a enviar 
 
+```java
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+
+</head>
+
+
+<body>
+<div>
+    <select class="box" id="connection">
+        <option value="/newpoint">Dibujo</option>
+        <option value="/newpolygon">Polígono</option>
+    </select>
+
+    <input id="dibujoid" type="number">
+    <button onclick="app.connect($('#dibujoid').val())">Connect</button>
+</div>
+X:<input id="x" type="number"/>
+Y:<input id="y" type="number"/>
+<button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
+<canvas id="canvas" width="800" height="600"></canvas>
+</body>
+</html>
+```
 
 
 ## Parte II.
