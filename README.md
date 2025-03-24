@@ -77,15 +77,12 @@ En el archivo html, se agregaron los campos para capturar los puntos a enviar
 </head>
 
 
-<body>
+<body onload="app.init()">
 <div>
     <select class="box" id="connection">
         <option value="/newpoint">Dibujo</option>
-        <option value="/newpolygon">Polígono</option>
     </select>
-
-    <input id="dibujoid" type="number">
-    <button onclick="app.connect($('#dibujoid').val())">Connect</button>
+    <button onclick="app.connect">Connect</button>
 </div>
 X:<input id="x" type="number"/>
 Y:<input id="y" type="number"/>
@@ -94,6 +91,7 @@ Y:<input id="y" type="number"/>
 </body>
 </html>
 ```
+
 
 
 ## Parte II.
