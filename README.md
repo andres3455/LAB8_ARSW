@@ -114,6 +114,11 @@ var connectAndSubscribe = function () {
         });
     }
 ```
+![Captura de pantalla 2025-03-24 133611](https://github.com/user-attachments/assets/3f5a70b7-c546-46cf-b0b1-39f4319be910)
+
+
+![Captura de pantalla 2025-03-24 133640](https://github.com/user-attachments/assets/bd6681c5-254c-4617-88a7-95c3cebbcabf)
+
 
 ## Parte II.
 
@@ -128,6 +133,54 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 	git commit -m "PARTE 2".
 	```
 
+### Desarrollo parte 2
+
+Para este caso debemos capturar y enviar automaticamente los puntos que capturemos directamente en el canvas, en el Js debemos agregar los siguientes bloques de codigo para cumplir con esta funcionalidad
+
+```javascript
+var addPointToCanvas = function (point) {
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+    
+        console.log(`Dibujando punto en: X=${point.x}, Y=${point.y}`);
+    
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.stroke();
+    };
+    
+    //parte 2
+    var getMousePosition = function (evt) {
+        var canvas = document.getElementById("canvas");
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    };
+```
+
+y en la función de conexión nos aseguramos de agregar el evento del mouse
+
+```javascript
+var canvas = document.getElementById("canvas");
+            canvas.addEventListener("click", function (evt) {
+                var pt = getMousePosition(evt);
+                console.info(` Publicando punto desde canvas en: ${topico}`, pt);
+                app.publishPoint(pt.x, pt.y);
+            });
+```
+
+### Video
+
+
+
+https://github.com/user-attachments/assets/ea12126a-70e9-409c-bd68-36e027547229
+
+
+
 ## Parte III.
 
 Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez, manteniendo tópicos independientes. Para esto:
@@ -140,6 +193,72 @@ Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez
 	```bash
 	git commit -m "PARTE 3".
 	```
+
+Desarrollo parte 3
+
+Para esta parte debemos ajustar el html y el Js 
+
+Al html le hacemos le añadimos el campo para el Id del dibujo
+
+```html
+
+<input id="dibujoid" type="number" placeholder="Ingrese ID de dibujo" />
+        <button onclick="app.connect()">Conectarse</button>
+        <p>Haz clic en el canvas para agregar puntos o ingrésalos manualmente:</p>
+        X: <input id="x" type="number" />
+        Y: <input id="y" type="number" />
+        <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
+
+<canvas id="canvas" width="1000" height="1000" style="border: 2px solid black;"></canvas>
+
+  </body>
+
+```
+
+```javascript
+//parte 3
+        connect: function () {
+            var dibujoid = document.getElementById("dibujoid").value;
+            if (!dibujoid) {
+                alert("Debes ingresar un ID para conectarte.");
+                return;
+            }
+            connectAndSubscribe(dibujoid);
+
+            var canvas = document.getElementById("canvas");
+            canvas.addEventListener("click", function (evt) {
+                var pt = getMousePosition(evt);
+                console.info(` Publicando punto desde canvas en: ${topico}`, pt);
+                app.publishPoint(pt.x, pt.y);
+            });
+        },
+
+        publishPoint: function (px, py) {
+            if (!stompClient || !stompClient.connected) {
+                alert("Error: No hay conexión con el WebSocket.");
+                return;
+            }
+
+            var pt = new Point(parseInt(px), parseInt(py));
+            console.info(" Publicando punto en:", topico);
+            addPointToCanvas(pt);
+            stompClient.send(`/app/newpoint.${topico.split(".")[1]}`, {}, JSON.stringify(pt)); // Envío dinámico
+        },
+
+        disconnect: function () {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+                console.log(" Desconectado del WebSocket");
+            }
+        }
+    };
+
+```
+### Video
+
+
+https://github.com/user-attachments/assets/d6de620b-adae-4e40-a7f9-8db4ca69283d
+
 
 
 ## Parte IV.
