@@ -63,7 +63,7 @@ Para esto, realice lo siguiente:
 
 En el archivo html, se agregaron los campos para capturar los puntos a enviar 
 
-```java
+```html
 <html>
 <head>
     <title>TODO supply a title</title>
