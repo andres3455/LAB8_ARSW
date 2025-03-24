@@ -12,3 +12,4 @@ public class CollabPaintApplication {
 		SpringApplication.run(CollabPaintApplication.class, args);
 	}
 }
+/// HELLO
