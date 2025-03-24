@@ -91,8 +91,29 @@ Y:<input id="y" type="number"/>
 </body>
 </html>
 ```
+Se maneja en el js para que se suscriba al topico
 
-
+```javascript
+var connectAndSubscribe = function () {
+        console.info('Connecting to WS...');
+        var socket = new SockJS('/stompendpoint');
+        stompClient = Stomp.over(socket);
+    
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+    
+            stompClient.subscribe('/topic/newpoint', function (eventbody) {
+                console.log("Mensaje recibido en WebSocket:", eventbody.body);
+    
+                var data = JSON.parse(eventbody.body);
+                alert(`Nuevo punto recibido: X=${data.x}, Y=${data.y}`);
+                addPointToCanvas(data); // parte 2
+            });
+        }, function (error) {
+            console.error("Error al conectar con WebSocket:", error);
+        });
+    }
+```
 
 ## Parte II.
 
