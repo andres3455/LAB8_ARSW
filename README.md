@@ -2,7 +2,11 @@
 ### Arquitecturas de Software - ARSW
 ### Laboratorio - Broker de Mensajes STOMP con WebSockets + HTML5 Canvas.
 
+### Laboratorio desearrollado por:
+* Andrés Felipe Rodríguez Chaparro
+* Santiago Guerra
 
+----
 
 - Conectarse con un botón
 - publicar con eventos de mouse
@@ -55,6 +59,10 @@ Para esto, realice lo siguiente:
 	```bash
 	git commit -m "PARTE 1".
 	```
+## Desarrollo parte 1
+
+En el archivo html, se agregaron los campos para capturar los puntos a enviar 
+
 
 
 ## Parte II.
