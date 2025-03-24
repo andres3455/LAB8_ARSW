@@ -20,6 +20,7 @@ var app = (function () {
         }
     };
 
+    //parte 2
     var addPointToCanvas = function (point) {
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
@@ -29,7 +30,7 @@ var app = (function () {
         ctx.fill();
         ctx.stroke();
     };
-
+    //parte 2
     var getMousePosition = function (evt) {
         var canvas = document.getElementById("canvas");
         var rect = canvas.getBoundingClientRect();
@@ -47,7 +48,7 @@ var app = (function () {
         stompClient.connect({}, function (frame) {
             console.log('Connected to WebSocket: ' + frame);
     
-            var topicPath = "/topic/newpoint";  // 🔥 Suscribirse al tópico correcto
+            var topicPath = "/topic/newpoint"; 
             console.log("Suscribiéndose a:", topicPath);
     
             stompClient.subscribe(topicPath, function (eventbody) {
@@ -55,7 +56,7 @@ var app = (function () {
     
                 var data = JSON.parse(eventbody.body);
                 alert("Nuevo punto recibido: X=" + data.x + ", Y=" + data.y);
-                addPointToCanvas(data);
+                addPointToCanvas(data); // parte 2 
             });
         }, function (error) {
             console.error("Error al conectar con WebSocket:", error);
@@ -95,7 +96,6 @@ var app = (function () {
             console.info("Publishing point at:", pt);
             addPointToCanvas(pt);
         
-            // 🔥 Enviar al servidor correctamente
             stompClient.send("/app/newpoint", {}, JSON.stringify(pt));
         },
 
