@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="/app.js?v=1.1"></script>
   </head>
 
   <body>
@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         X: <input id="x" type="number" />
         Y: <input id="y" type="number" />
         <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
-
+    </div>
 <canvas id="canvas" width="1000" height="1000" style="border: 2px solid black;"></canvas>
 
   </body>

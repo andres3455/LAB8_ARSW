@@ -10,6 +10,11 @@ var app = (function () {
         }
     }
 
+    class Polygon {
+        constructor(points) {
+            this.points = points;
+        }
+    }
 
     var addPointToTopic = function (point) {
         if (stompClient && stompClient.connected) {
@@ -33,7 +38,22 @@ var app = (function () {
         ctx.fill();
         ctx.stroke();
     };
-    
+
+    var drawPolygon = function (polygon) {
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        ctx.beginPath();
+        ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
+        for (var i = 1; i < polygon.points.length; i++) {
+            ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
+        ctx.fill();
+        ctx.stroke();
+    };
+
     //parte 2
     var getMousePosition = function (evt) {
         var canvas = document.getElementById("canvas");
@@ -61,6 +81,12 @@ var app = (function () {
                 var data = JSON.parse(eventbody.body);
                 alert(`Nuevo punto recibido en dibujo ${dibujoid}: X=${data.x}, Y=${data.y}`);
                 addPointToCanvas(data); // parte 2
+            });
+
+            stompClient.subscribe(`/topic/newpolygon.${dibujoid}`, function (eventbody) {
+                console.log("📐 Polígono recibido:", eventbody.body);
+                var polygonData = JSON.parse(eventbody.body);
+                drawPolygon(polygonData);
             });
         }, function (error) {
             console.error("Error al conectar con WebSocket:", error);
